@@ -1,0 +1,38 @@
+{
+  "name": "Eeyobes Spring Lounge Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+
+  "postCreateCommand": "npm install -g @modelcontextprotocol/cli && mcp install github --url https://api.githubcopilot.com/mcp/ && npm install -g pm2 && sudo apt-get update && sudo apt-get install -y zip unzip openssh-client",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "ms-azuretools.vscode-docker",
+        "github.vscode-github-actions",
+        "ms-vscode.remote-explorer"
+      ]
+    }
+  },
+
+  "remoteUser": "node",
+
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+
+  "forwardPorts": [3000, 5000],
+
+  "portsAttributes": {
+    "3000": { "label": "Frontend" },
+    "5000": { "label": "Backend API" }
+  }
+}
