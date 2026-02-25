@@ -1,0 +1,29 @@
+name: Deploy to IONOS Cloud
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install ionosctl
+        run: |
+          curl -sSL https://github.com/ionos-cloud/ionosctl/releases/latest/download/ionosctl_Linux_x86_64.tar.gz | tar -xz
+          sudo mv ionosctl /usr/local/bin/
+
+      - name: Authenticate with IONOS Cloud
+        env:
+          IONOS_TOKEN: ${{ secrets.IONOS_TOKEN }}
+        run: |
+          ionosctl login --token "$IONOS_TOKEN"
+
+      - name: Run deployment script
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
