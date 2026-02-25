@@ -1,0 +1,5 @@
+{
+  "name": "Eeyobes Spring Lounge Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  ...
+}
